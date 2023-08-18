@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "tex-based-diary-generator"
+version = "0.1.0"
+description = ""
+authors = ["4hei4hei <4hei4hei@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.3.0"
+textfile = "^0.1.5"
+pytest = "^7.4.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

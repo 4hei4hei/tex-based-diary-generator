@@ -1,0 +1,34 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% スペース調整
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\baselinestretch}{1}            % 行間調節
+
+% item間マージンの調整
+%\setlength{\itemsep}{3pt}                    % item間の改行幅
+%\setlength{\topsep}                          % 最初の\itemと前段落との間の空白
+%\setlength{\partopsep}                       % 環境を新しい段落で始めた時の空白
+
+% 図表関係の調整
+%\setcounter{topnumber}{5}                    % ページ上部の図表の数上限
+\def\topfraction{1.00}                        % ページの上1.00まで図表で占めて可
+%\setcounter{bottomnumber}{5}                 % ページ下部の図表の数制限
+\def\bottomfraction{1.00}                     % ページの下1.00まで図表で占めて可
+\setcounter{totalnumber}{10}                  % ページあたりの図表の数上限
+\def\textfraction{0.1}                        % ページあたり本文が占める割合の下限
+\def\floatpagefraction{0.9}                   % ページあたり図表が占める割合の上限
+
+% 図表の空白調整
+\setlength{\floatsep}{0.2cm}                  % 図表と図表の間のマージン
+\setlength{\dblfloatsep}{0cm}                 % ↑の二段組 version
+\setlength{\textfloatsep}{0.4cm}              % 図表と本文の間のマージン
+\setlength{\abovecaptionskip}{0cm}            % 図表のcaptionと本体の間のマージン
+\setlength{\belowcaptionskip}{0cm}            % 図表のcaption下部のマージン
+%\setlength{\subfigtopskip}{0cm}              % subfigureの図上のマージン
+%\setlength{\subfigbottomskip}{0cm}           % subfigureの図下のマージン
+%\setlength{\subfigcapskip}{0cm}              % subfigureのcaptionと図間のマージン
+
+% 数式の上下の空白調整（プリアンブルに書くと機能しない？）
+\setlength{\abovedisplayskip}{0pt}            % 上部のマージン
+\setlength{\belowdisplayskip}{0pt}            % 下部のマージン
+\setlength{\abovedisplayshortskip}{0pt}       % 上部のマージン
+\setlength{\belowdisplayshortskip}{0pt}       % 下部のマージン

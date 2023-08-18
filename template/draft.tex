@@ -1,0 +1,25 @@
+% Document class
+\documentclass[11pt,a4paper]{jsarticle}
+
+% Packages
+\usepackage{style/packages}
+\usepackage{style/revision}
+
+% Format setting
+\setlength{\textwidth}{\fullwidth}
+\setlength{\textheight}{39\baselineskip}
+\addtolength{\textheight}{\topskip}
+\setlength{\voffset}{-0.5in}
+\setlength{\headsep}{0.3in}
+
+% Page style
+\pagestyle{myheadings}
+\setcounter{page}{0}
+
+\begin{document}
+
+\include{summary}
+
+\input{list-bodies}
+
+\end{document}

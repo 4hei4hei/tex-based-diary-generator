@@ -1,0 +1,33 @@
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+%\usepackage[dvipdfmx,usenames]{color}         % 色
+\usepackage{comment}                          % コメント
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 状態管理の命令
+% 状態は，執筆前→執筆中→要確認→修正済→完了の5段階で管理
+% \yet, \Yet: 執筆前・執筆中の箇所
+% \act, \Act: 要確認の箇所
+% \rev, \Rev: 修正済の箇所
+% \fin, \Fin: 完了の箇所
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 状態に対する色づけ（命令の挿入以降全てに適用する場合）
+% 用例：
+% \Yet
+% 本文
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\Yet}{\color[named]{Red}}
+\newcommand{\Act}{\color[named]{RoyalBlue}}
+\newcommand{\Rev}{\color[named]{OliveGreen}}
+\newcommand{\Fin}{\color[named]{Black}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 状態に対する色づけ（中括弧ないのみに適用する場合）
+% 用例；
+% \yet{本文}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\yet}{\textcolor[named]{Red}}
+\newcommand{\act}{\textcolor[named]{RoyalBlue}}
+\newcommand{\rev}{\textcolor[named]{OliveGreen}}
+\newcommand{\fin}{\textcolor[named]{Black}}
