@@ -24,14 +24,13 @@ def validate_args(args) -> tuple:
     try:
         start_day = args["start_date"]
         day_range = args["day_range"]
-        if start_day == None or day_range == None:
+        if start_day is None or day_range is None:
             raise ArgFormatError(
                 "Args are empty (required two args, i.e., --start_date and --day_range)"
             )
-
         fmt_flag = re.fullmatch(allowed_pettern_start_day, start_day)
 
-        if fmt_flag == None:
+        if fmt_flag is None:
             raise ArgFormatError(
                 "Date format is invalid (You must give a date, such as yyyy-mm-dd)"
             )
