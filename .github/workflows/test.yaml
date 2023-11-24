@@ -1,0 +1,17 @@
+name: test
+
+on: [push]
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up asdf
+        uses: asdf-vm/actions/install@v2
+      - name: Install python packages
+        run: poetry install --no-interaction --with dev
+      - name: Run test
+        run: poetry run pytest -v
