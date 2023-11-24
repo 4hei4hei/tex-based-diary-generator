@@ -4,13 +4,13 @@
 
 # Requirements
 
-Mac 環境かつ、ツール群は以下の version にて動作することを確認
+Mac 環境かつ、ツール群は以下の Version にて動作することを確認
 
 asdf 管理
 
-- Python ^3.9
+- Python 3.12.0
 
-- Poetry ^1.4
+- Poetry 1.6.1
 
 asdf 外 (Homebrew) の管理
 
