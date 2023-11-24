@@ -1,8 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/macos,linux,asdf,tex,latex,python
-# Edit at https://www.toptal.com/developers/gitignore?templates=macos,linux,asdf,tex,latex,python
-
-### asdf ###
-/.tool-versions
+# Created by https://www.toptal.com/developers/gitignore/api/macos,linux,tex,latex,python
+# Edit at https://www.toptal.com/developers/gitignore?templates=macos,linux,tex,latex,python
 
 ### LaTeX ###
 ## Core latex/pdflatex auxiliary files:

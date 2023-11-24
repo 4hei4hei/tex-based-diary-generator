@@ -24,14 +24,13 @@ def validate_args(args) -> tuple:
     try:
         start_day = args["start_date"]
         day_range = args["day_range"]
-        if start_day == None or day_range == None:
+        if start_day is None or day_range is None:
             raise ArgFormatError(
                 "Args are empty (required two args, i.e., --start_date and --day_range)"
             )
-
         fmt_flag = re.fullmatch(allowed_pettern_start_day, start_day)
 
-        if fmt_flag == None:
+        if fmt_flag is None:
             raise ArgFormatError(
                 "Date format is invalid (You must give a date, such as yyyy-mm-dd)"
             )
@@ -77,16 +76,14 @@ def generate_files(start_day, day_range) -> None:
         datetime_day = datetime_start_day + datetime.timedelta(days=day)
         file_name = "".join(str(datetime_day).split()[0].split("-"))
 
-        shutil.copyfile(
-            f"./{dir_name}/template_body.tex", f"./{dir_name}/{file_name}.tex"
-        )
+        shutil.copyfile(f"./{dir_name}/body.tex", f"./{dir_name}/{file_name}.tex")
 
         textfile.replace(
             f"./{dir_name}/{file_name}.tex",
             r"\section*{yyyymmdd}",
             rf"\section*{{{file_name}}}",
         )
-        f = open(f"./{dir_name}/list-bodies.tex", "a")
+        f = open(f"./{dir_name}/bodies.tex", "a")
         f.write(rf"\include{{ {file_name}.tex}}" + "\n")
 
 
