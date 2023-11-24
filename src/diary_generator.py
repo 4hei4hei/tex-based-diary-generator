@@ -77,16 +77,14 @@ def generate_files(start_day, day_range) -> None:
         datetime_day = datetime_start_day + datetime.timedelta(days=day)
         file_name = "".join(str(datetime_day).split()[0].split("-"))
 
-        shutil.copyfile(
-            f"./{dir_name}/template_body.tex", f"./{dir_name}/{file_name}.tex"
-        )
+        shutil.copyfile(f"./{dir_name}/body.tex", f"./{dir_name}/{file_name}.tex")
 
         textfile.replace(
             f"./{dir_name}/{file_name}.tex",
             r"\section*{yyyymmdd}",
             rf"\section*{{{file_name}}}",
         )
-        f = open(f"./{dir_name}/list-bodies.tex", "a")
+        f = open(f"./{dir_name}/bodies.tex", "a")
         f.write(rf"\include{{ {file_name}.tex}}" + "\n")
 
 
