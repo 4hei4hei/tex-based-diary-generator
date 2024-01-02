@@ -28,6 +28,7 @@ def validate_args(args) -> tuple:
             raise ArgFormatError(
                 "Args are empty (required two args, i.e., --start_date and --day_range)"
             )
+
         fmt_flag = re.fullmatch(allowed_pettern_start_day, start_day)
 
         if fmt_flag is None:
@@ -87,7 +88,7 @@ def generate_files(start_day, day_range) -> None:
         f.write(rf"\include{{ {file_name}.tex}}" + "\n")
 
 
-def main(**args):
+def main(**args) -> None:
     logger.info("Start generate dirary files")
 
     try:
