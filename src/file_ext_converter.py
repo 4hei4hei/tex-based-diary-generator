@@ -4,10 +4,28 @@ import os
 import shutil
 
 
+def retrieve_current_dir() -> str:
+    current_path = os.getcwd()
+    current_dir = current_path.split("/")[-1]
+    return current_dir
+
+
+def remove_not_applicables(body_files) -> list:
+    not_applicables = ["body.tex", "bodies.tex", "draft.tex", "summary.tex"]
+    for not_applicable in not_applicables:
+        body_files.remove(not_applicable)
+
+    return body_files
+
+
 def main(**args) -> None:
     # 出力先ディレクトリ内のファイルを削除する
-    for target_file in glob.glob("./converted_text/*.txt"):
-        os.remove(target_file)
+    if retrieve_current_dir() == "src":
+        for target_file in glob.glob("../converted_text/*.txt"):
+            os.remove(target_file)
+    else:
+        for target_file in glob.glob("./converted_text/*.txt"):
+            os.remove(target_file)
 
     # 対象となるディレクトリパスを引数から取得
     target_dir = args["target_dir"]
@@ -20,9 +38,7 @@ def main(**args) -> None:
         if os.path.isfile(os.path.join(target_dir, f))
         if ".tex" in f
     ]
-    not_applicables = ["body.tex", "bodies.tex", "draft.tex", "summary.tex"]
-    for not_applicable in not_applicables:
-        body_files.remove(not_applicable)
+    body_files = remove_not_applicables(body_files)
 
     for body_file in body_files:
         converted_body_file = body_file.replace(".tex", ".txt")
