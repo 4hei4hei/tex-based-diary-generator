@@ -1,5 +1,6 @@
 import argparse
 import datetime
+import os
 import re
 import shutil
 import sys
@@ -14,6 +15,12 @@ allowed_pettern_start_day = r"[0-9]{4}-[0-9]{2}-[0-9]{2}"
 
 class ArgFormatError(Exception):
     pass
+
+
+def retrieve_current_dir() -> str:
+    current_path = os.getcwd()
+    current_dir = current_path.split("/")[-1]
+    return current_dir
 
 
 def validate_args(args) -> tuple:
@@ -64,11 +71,18 @@ def generate_files(start_day, day_range) -> None:
     str_start_day = "".join(str(datetime_start_day).split()[0].split("-"))
     str_end_day = "".join(str(datetime_end_day).split()[0].split("-"))
 
-    dir_name = f"../diary/{str_start_day}-{str_end_day}"
+    current_dir = retrieve_current_dir()
+    if current_dir == "src":
+        dir_name = f"../diary/{str_start_day}-{str_end_day}"
+    else:
+        dir_name = f"./diary/{str_start_day}-{str_end_day}"
     print(rf"{str_start_day}-{str_end_day}/ is generated!!")
 
     try:
-        shutil.copytree("../template/", f"./{dir_name}/")
+        if current_dir == "src":
+            shutil.copytree("../template/", f"./{dir_name}/")
+        else:
+            shutil.copytree("./template/", f"../{dir_name}/")
     except OSError as e:
         logger.info(e)
         pass
@@ -77,7 +91,7 @@ def generate_files(start_day, day_range) -> None:
         datetime_day = datetime_start_day + datetime.timedelta(days=day)
         file_name = "".join(str(datetime_day).split()[0].split("-"))
 
-        shutil.copyfile(f"./{dir_name}/body.tex", f"./{dir_name}/{file_name}.tex")
+        shutil.copyfile(f"{dir_name}/body.tex", f"./{dir_name}/{file_name}.tex")
 
         textfile.replace(
             f"./{dir_name}/{file_name}.tex",

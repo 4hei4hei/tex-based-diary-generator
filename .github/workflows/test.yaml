@@ -9,9 +9,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Set up asdf
+      - name: asdf-vm v2
         uses: asdf-vm/actions/install@v2
-      - name: Install python packages
-        run: poetry install --no-interaction --with dev
+      - name: Poetry export
+        run: poetry export --with dev --format requirements.txt --output ./requirements.txt
+      - name: Install Python packages
+        run: pip install -r requirements.txt
       - name: Run test
-        run: poetry run inv test
+        run: invoke test
