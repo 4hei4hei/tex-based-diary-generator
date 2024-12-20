@@ -17,3 +17,15 @@ jobs:
         run: pip install -r requirements.txt
       - name: Run test
         run: invoke test
+      - name: Notify on success
+        if: success()
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+          --data "{\"text\": \"[$GITHUB_REPOSITORY][$GITHUB_REF_NAME] test result: SUCCESS\"}" \
+          ${{ secrets.SLACK_WEBHOOK_URL }}
+      - name: Notify on failure
+        if: failure()
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+          --data "{\"text\": \"[$GITHUB_REPOSITORY][$GITHUB_REF_NAME] test result: FAILURE\"}" \
+          ${{ secrets.SLACK_WEBHOOK_URL }}

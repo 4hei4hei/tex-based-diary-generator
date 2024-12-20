@@ -1,26 +1,14 @@
 import argparse
 import datetime
-import os
 import re
 import shutil
-import sys
 import textfile
 from logging import getLogger
 
+import path_resolver
+
 logger = getLogger(__name__)
-
-
 allowed_pettern_start_day = r"[0-9]{4}-[0-9]{2}-[0-9]{2}"
-
-
-class ArgFormatError(Exception):
-    pass
-
-
-def retrieve_current_dir() -> str:
-    current_path = os.getcwd()
-    current_dir = current_path.split("/")[-1]
-    return current_dir
 
 
 def validate_args(args) -> tuple:
@@ -32,23 +20,23 @@ def validate_args(args) -> tuple:
         start_day = args["start_date"]
         day_range = args["day_range"]
         if start_day is None or day_range is None:
-            raise ArgFormatError(
+            raise ValueError(
                 "Args are empty (required two args, i.e., --start_date and --day_range)"
             )
 
         fmt_flag = re.fullmatch(allowed_pettern_start_day, start_day)
 
         if fmt_flag is None:
-            raise ArgFormatError(
+            raise ValueError(
                 "Date format is invalid (You must give a date, such as yyyy-mm-dd)"
             )
         if day_range <= 0:
-            raise ArgFormatError(
+            raise ValueError(
                 "Number of days format is invalid (You must give a nonnegative integer)"
             )
         return start_day, day_range
 
-    except ArgFormatError as e:
+    except ValueError as e:
         exception_messeage = e
 
     except Exception as e:
@@ -71,7 +59,7 @@ def generate_files(start_day, day_range) -> None:
     str_start_day = "".join(str(datetime_start_day).split()[0].split("-"))
     str_end_day = "".join(str(datetime_end_day).split()[0].split("-"))
 
-    current_dir = retrieve_current_dir()
+    current_dir = path_resolver.retrieve_current_dir()
     if current_dir == "src":
         dir_name = f"../diary/{str_start_day}-{str_end_day}"
     else:
@@ -80,9 +68,9 @@ def generate_files(start_day, day_range) -> None:
 
     try:
         if current_dir == "src":
-            shutil.copytree("../template/", f"./{dir_name}/")
+            shutil.copytree("../templates/", f"./{dir_name}/")
         else:
-            shutil.copytree("./template/", f"../{dir_name}/")
+            shutil.copytree("./templates/", f"../{dir_name}/")
     except OSError as e:
         logger.info(e)
         pass
@@ -109,12 +97,8 @@ def main(**args) -> None:
         start_day, day_range = validate_args(args)
         generate_files(start_day, day_range)
         logger.info("Generate dirary files is finished!!")
-    except ValueError as e:
-        logger.error(e)
-        sys.exit()
     except Exception as e:
         logger.error(e)
-        sys.exit()
 
 
 if __name__ == "__main__":

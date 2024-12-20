@@ -1,17 +1,12 @@
 import argparse
-import glob
 import os
 import shutil
 
-
-def retrieve_current_dir() -> str:
-    current_path = os.getcwd()
-    current_dir = current_path.split("/")[-1]
-    return current_dir
+import path_resolver
 
 
 def remove_not_applicables(body_files) -> list:
-    not_applicables = ["body.tex", "bodies.tex", "draft.tex", "summary.tex"]
+    not_applicables = ["body.tex", "bodies.tex", "draft.tex"]
     for not_applicable in not_applicables:
         body_files.remove(not_applicable)
 
@@ -20,16 +15,21 @@ def remove_not_applicables(body_files) -> list:
 
 def main(**args) -> None:
     # 出力先ディレクトリ内のファイルを削除する
-    if retrieve_current_dir() == "src":
-        for target_file in glob.glob("../converted_text/*.txt"):
-            os.remove(target_file)
+    if path_resolver.retrieve_current_dir() == "src":
+        converted_text_dir = "../converted_text"
+        dirs = os.listdir("../")
     else:
-        for target_file in glob.glob("./converted_text/*.txt"):
-            os.remove(target_file)
+        converted_text_dir = "./converted_text"
+        dirs = os.listdir("./")
+
+    # 出力先が存在する場合は中身を掃除、ない場合はディレクトリを作成する
+    if "converted_text" in dirs:
+        shutil.rmtree(converted_text_dir)
+    else:
+        os.makedirs(converted_text_dir)
 
     # 対象となるディレクトリパスを引数から取得
     target_dir = args["target_dir"]
-    print(target_dir)
 
     # ディレクトリ配下の全ファイルから tex ファイルかつ、ファイル名が日付であるもののみのリストを生成
     body_files = [
@@ -40,11 +40,16 @@ def main(**args) -> None:
     ]
     body_files = remove_not_applicables(body_files)
 
+    latest_dir_name = path_resolver.retrieve_latest_dir()
+    os.makedirs(f"./converted_text/{latest_dir_name}", exist_ok=True)
+
     for body_file in body_files:
         converted_body_file = body_file.replace(".tex", ".txt")
         new_body_file = f"{target_dir}/{converted_body_file}"
         shutil.copy(f"{target_dir}/{body_file}", new_body_file)
-        shutil.move(new_body_file, f"./converted_text/{converted_body_file}")
+        shutil.move(
+            new_body_file, f"./converted_text/{latest_dir_name}/{converted_body_file}"
+        )
 
 
 if __name__ == "__main__":
